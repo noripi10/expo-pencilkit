@@ -2,25 +2,13 @@ import { NativeModulesProxy, EventEmitter, Subscription } from 'expo-modules-cor
 
 // Import the native module. On web, it will be resolved to ExpoPencilkit.web.ts
 // and on native platforms to ExpoPencilkit.ts
+import ExpoPencilkit from './ExpoPencilkit';
+import { ExpoPencilkitViewProps } from './ExpoPencilkit.types';
 import ExpoPencilkitModule from './ExpoPencilkitModule';
-import ExpoPencilkitView from './ExpoPencilkitView';
-import { ChangeEventPayload, ExpoPencilkitViewProps } from './ExpoPencilkit.types';
 
-// Get the native constant value.
-export const PI = ExpoPencilkitModule.PI;
+const clearDrawAsync = async () => {
+  return await ExpoPencilkitModule.clearDrawAsync();
+};
 
-export function hello(): string {
-  return ExpoPencilkitModule.hello();
-}
-
-export async function setValueAsync(value: string) {
-  return await ExpoPencilkitModule.setValueAsync(value);
-}
-
-const emitter = new EventEmitter(ExpoPencilkitModule ?? NativeModulesProxy.ExpoPencilkit);
-
-export function addChangeListener(listener: (event: ChangeEventPayload) => void): Subscription {
-  return emitter.addListener<ChangeEventPayload>('onChange', listener);
-}
-
-export { ExpoPencilkitView, ExpoPencilkitViewProps, ChangeEventPayload };
+export default ExpoPencilkit;
+export { ExpoPencilkitViewProps, clearDrawAsync };

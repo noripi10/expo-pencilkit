@@ -1,7 +1,5 @@
-export type ChangeEventPayload = {
-  value: string;
-};
+import { ViewProps } from 'react-native';
 
 export type ExpoPencilkitViewProps = {
-  name: string;
-};
+  imageData: string;
+} & ViewProps;
