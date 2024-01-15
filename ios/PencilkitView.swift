@@ -33,6 +33,8 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
         canvas.delegate = self
         canvas.becomeFirstResponder()
         canvas.frame = bounds
+
+        createImage()
     }
 
     func setImageData(_ imageData: String) {
@@ -40,16 +42,6 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
             return
         }
         self.imageData = imageData
-        guard let data = Data(base64Encoded: self.imageData) else {
-            return
-        }
-        let image = UIImage(data: data)
-        templateImageView.image = image
-        templateImageView.clipsToBounds = true
-        templateImageView.contentMode = .scaleAspectFill
-
-        canvas.addSubview(templateImageView)
-        canvas.sendSubviewToBack(templateImageView)
     }
 
     func showToolPicker() {
@@ -58,6 +50,22 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
             toolPicker?.setVisible(true, forFirstResponder: canvas)
             toolPicker?.addObserver(canvas)
         }
+    }
+
+    func createImage() {
+        guard let data = Data(base64Encoded: self.imageData) else {
+            return
+        }
+        let image = UIImage(data: data)
+        templateImageView.image = image
+
+        // templateImageView.frame = canvas.bounds
+        templateImageView.frame = CGRect(x: 0, y: 0, width: canvas.bounds.width, height: canvas.bounds.height)
+        templateImageView.contentMode = .scaleAspectFill
+        templateImageView.clipsToBounds = true
+
+        canvas.addSubview(templateImageView)
+        canvas.sendSubviewToBack(templateImageView)
     }
 
     func clearDraw() {
