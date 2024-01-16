@@ -1,0 +1,22 @@
+{
+  "npm": {
+    "publish": true
+  },
+  "github": {
+    "release": true
+  },
+  "git": {
+    "push": true,
+    "tagName": "v${version}",
+    "commitMessage": "chore: release ${version}",
+    "addFiles": ["package.json", "CHANGELOG.md"]
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "angular"
+      },
+      "infile": "CHANGELOG.md"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "name": "expo-pencilkit",
-  "version": "0.1.0",
-  "description": "apple pencilkit for expo managed app",
+  "name": "@noripi10/expo-pencilkit",
+  "version": "0.0.1",
+  "description": "Apple Pencilkit",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -13,7 +13,8 @@
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
     "open:ios": "open -a \"Xcode\" example/ios",
-    "open:android": "open -a \"Android Studio\" example/android"
+    "open:android": "open -a \"Android Studio\" example/android",
+    "release": "release-it"
   },
   "keywords": [
     "react-native",
@@ -28,11 +29,12 @@
   "author": "noripi10 <55979374+noripi10@users.noreply.github.com> (http://github.com/noripi10)",
   "license": "MIT",
   "homepage": "http://github.com/noripi10/expo-pencilkit#readme",
-  "dependencies": {},
   "devDependencies": {
+    "@release-it/conventional-changelog": "^8.0.1",
     "@types/react": "^18.0.25",
     "expo-module-scripts": "^3.0.11",
-    "expo-modules-core": "^1.5.12"
+    "expo-modules-core": "^1.5.12",
+    "release-it": "^17.0.1"
   },
   "peerDependencies": {
     "expo": "*",
