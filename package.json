@@ -22,7 +22,10 @@
     "expo-pencilkit",
     "ExpoPencilkit"
   ],
-  "repository": "http://github.com/noripi10/expo-pencilkit",
+  "repository": {
+    "type": "github",
+    "url": "git+ssh://git@github.com/noripi10/expo-pencilkit.git"
+  },
   "bugs": {
     "url": "http://github.com/noripi10/expo-pencilkit/issues"
   },
@@ -40,5 +43,8 @@
     "expo": "*",
     "react": "*",
     "react-native": "*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
