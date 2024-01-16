@@ -3,7 +3,7 @@
     "publish": true
   },
   "github": {
-    "release": true
+    "release": false
   },
   "git": {
     "push": true,
