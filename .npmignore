@@ -9,3 +9,5 @@ __tests__
 /android/src/test/
 /android/build/
 /example/
+.prettierrc
+.release-it.json
