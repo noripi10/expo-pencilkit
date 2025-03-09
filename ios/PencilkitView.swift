@@ -2,6 +2,12 @@ import Foundation
 import PencilKit
 
 class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, PKCanvasViewDelegate {
+    private let templateImageView = UIImageView()
+    private var imageData: String = ""
+
+    private var toolPicker: PKToolPicker?
+    // var undoManager: UndoManager?
+
     lazy var canvas: PKCanvasView = {
         let canvasView = PKCanvasView()
         if #available(iOS 14.0, *) {
@@ -11,12 +17,10 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
         canvasView.isOpaque = true
         canvasView.backgroundColor = .clear
 
+        // undoManager = canvasView.undoManager
+
         return canvasView
     }()
-
-    private let templateImageView = UIImageView()
-    private var toolPicker: PKToolPicker?
-    private var imageData: String = ""
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,17 +35,10 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
 
     override func layoutSubviews() {
         canvas.delegate = self
-        canvas.becomeFirstResponder()
         canvas.frame = bounds
+        canvas.becomeFirstResponder()
 
         createImage()
-    }
-
-    func setImageData(_ imageData: String) {
-        if imageData.isEmpty || imageData == "" || self.imageData == imageData {
-            return
-        }
-        self.imageData = imageData
     }
 
     func showToolPicker() {
@@ -68,8 +65,42 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
         canvas.sendSubviewToBack(templateImageView)
     }
 
-    func clearDraw() {
-        canvas.drawing = PKDrawing()
+    func setImageData(_ imageData: String) {
+        if imageData.isEmpty || imageData == "" || self.imageData == imageData {
+            return
+        }
+        self.imageData = imageData
+    }
+
+    func clearDraw(_ options: CreaDrawOptions) {
+        if !options.force {
+            let title = NSLocalizedString("確認", comment: "Clear confirmation title")
+            let message = NSLocalizedString("描画をクリアしますか？", comment: "Clear confirmation message")
+            let okTitle = NSLocalizedString("OK", comment: "OK button")
+            let cancelTitle = NSLocalizedString("キャンセル", comment: "Cancel button")
+
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: okTitle, style: .default, handler: { _ in
+                self.canvas.drawing = PKDrawing()
+            }))
+            alert.addAction(UIAlertAction(title: cancelTitle, style: .cancel))
+
+            if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
+                rootViewController.present(alert, animated: true, completion: nil)
+            }
+
+            return
+        }
+
+        self.canvas.drawing = PKDrawing()
+    }
+
+    func undo() {
+        // undoManager?.undo()
+    }
+
+    func redo() {
+        // undoManager?.redo()
     }
 
     func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {

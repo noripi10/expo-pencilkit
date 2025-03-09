@@ -15,6 +15,13 @@ public class ExpoPencilkitModule: Module {
         Prop("imageData") { (view, imageData: String) in
             view.pencilkitView.setImageData(imageData)
         }
+
+        AsyncFunction("clearDraw") { (view: ExpoPencilkitView, options: CreaDrawOptions?, promise: Promise) in
+            let options = options ?? CreaDrawOptions()
+
+            view.pencilkitView.clearDraw(options)
+            promise.resolve(nil)
+        }
     }
   }
 }

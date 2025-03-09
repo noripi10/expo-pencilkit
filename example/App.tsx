@@ -1,4 +1,4 @@
-import ExpoPencilkit from 'expo-pencilkit';
+import ExpoPencilkit, { ExpePencilKitViewMethods } from 'expo-pencilkit';
 import { useRef } from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
@@ -8,6 +8,7 @@ const imageData =
 
 export default function App() {
   const viewRef = useRef<View>(null);
+  const pencilKitRef = useRef<ExpePencilKitViewMethods>(null);
 
   const captureHandler = async () => {
     if (!viewRef.current) return;
@@ -22,11 +23,25 @@ export default function App() {
       <SafeAreaView style={styles.container}>
         <Text style={{ alignSelf: 'center' }}>Create Expo Modules + Apple PencilKit</Text>
         <View ref={viewRef} style={{ flex: 1 }}>
-          <ExpoPencilkit style={{ flex: 1 }} imageData={imageData} />
+          <ExpoPencilkit ref={pencilKitRef} style={{ flex: 1 }} imageData={imageData} />
         </View>
       </SafeAreaView>
 
       <View style={styles.captureButton}>
+        <Button
+          title='clear(force)'
+          onPress={async () => {
+            await pencilKitRef.current?.clearDraw();
+          }}
+        />
+
+        <Button
+          title='clear(cofirm)'
+          onPress={async () => {
+            await pencilKitRef.current?.clearDraw({ force: false });
+          }}
+        />
+
         <Button title='capture' onPress={captureHandler} />
       </View>
     </View>
@@ -42,5 +57,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 80,
     right: 20,
+    alignItems: 'flex-end',
   },
 });
