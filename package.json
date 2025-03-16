@@ -1,6 +1,6 @@
 {
   "name": "@noripi10/expo-pencilkit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Apple Pencilkit",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -33,11 +33,11 @@
   "license": "MIT",
   "homepage": "http://github.com/noripi10/expo-pencilkit#readme",
   "devDependencies": {
-    "@release-it/conventional-changelog": "^8.0.1",
+    "@release-it/conventional-changelog": "^10.0.0",
     "@types/react": "^18.0.25",
     "expo-module-scripts": "^3.4.1",
     "expo-modules-core": "^1.11.12",
-    "release-it": "^17.0.1"
+    "release-it": "^18.1.2"
   },
   "peerDependencies": {
     "expo": "*",
