@@ -1,6 +1,6 @@
 {
   "name": "@noripi10/expo-pencilkit",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Apple Pencilkit",
   "main": "build/index.js",
   "types": "build/index.d.ts",
