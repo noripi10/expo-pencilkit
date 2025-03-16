@@ -24,8 +24,10 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         clipsToBounds = true
         addSubview(canvas)
+
         showToolPicker()
     }
 
@@ -44,8 +46,8 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
     func showToolPicker() {
         if #available(iOS 14.0, *) {
             toolPicker = PKToolPicker()
-            toolPicker?.setVisible(true, forFirstResponder: canvas)
             toolPicker?.addObserver(canvas)
+            toolPicker?.setVisible(true, forFirstResponder: canvas)
         }
     }
 
