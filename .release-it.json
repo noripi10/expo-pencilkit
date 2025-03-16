@@ -1,9 +1,10 @@
 {
+  "$schema": "https://unpkg.com/release-it@18/schema/release-it.json",
   "npm": {
     "publish": true
   },
   "github": {
-    "release": false
+    "release": true
   },
   "git": {
     "push": true,
