@@ -6,7 +6,6 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
     private var imageData: String = ""
 
     private var toolPicker: PKToolPicker?
-    // var undoManager: UndoManager?
 
     lazy var canvas: PKCanvasView = {
         let canvasView = PKCanvasView()
@@ -16,8 +15,6 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
         canvasView.isMultipleTouchEnabled = true
         canvasView.isOpaque = true
         canvasView.backgroundColor = .clear
-
-        // undoManager = canvasView.undoManager
 
         return canvasView
     }()
@@ -98,11 +95,11 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
     }
 
     func undo() {
-        // undoManager?.undo()
+      canvas.undoManager?.undo()
     }
 
     func redo() {
-        // undoManager?.redo()
+      canvas.undoManager?.redo()
     }
 
     func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {

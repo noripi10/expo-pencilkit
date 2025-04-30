@@ -22,6 +22,16 @@ public class ExpoPencilkitModule: Module {
             view.pencilkitView.clearDraw(options)
             promise.resolve(nil)
         }
+
+        AsyncFunction("undo") { (view: ExpoPencilkitView, promise: Promise) in
+            view.pencilkitView.undo()
+            promise.resolve(nil)
+        }
+
+        AsyncFunction("redo") { (view: ExpoPencilkitView, promise: Promise) in
+            view.pencilkitView.redo()
+            promise.resolve(nil)
+        }
     }
   }
 }

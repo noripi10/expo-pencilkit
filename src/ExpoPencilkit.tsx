@@ -14,6 +14,16 @@ export const ExpoPencilkit = React.forwardRef<ExpePencilKitViewMethods, ExpoPenc
         await nativeRef.current.clearDraw(props);
       }
     },
+    undo: async () => {
+      if (nativeRef.current) {
+        await nativeRef.current.undo();
+      }
+    },
+    redo: async () => {
+      if (nativeRef.current) {
+        await nativeRef.current.redo();
+      }
+    },
   }));
 
   return <NativeViewManager {...props} ref={nativeRef} />;

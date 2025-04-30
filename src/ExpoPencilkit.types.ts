@@ -10,4 +10,6 @@ type ClearDrawProps = {
 
 export type ExpePencilKitViewMethods = {
   clearDraw: (props?: ClearDrawProps) => Promise<void>;
+  undo: () => Promise<void>;
+  redo: () => Promise<void>;
 };
