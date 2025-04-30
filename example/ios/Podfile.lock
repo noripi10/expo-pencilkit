@@ -5,20 +5,20 @@ PODS:
     - ExpoModulesCore
   - EXFont (11.10.3):
     - ExpoModulesCore
-  - Expo (50.0.17):
+  - Expo (50.0.21):
     - ExpoModulesCore
   - ExpoFileSystem (16.0.9):
     - ExpoModulesCore
   - ExpoKeepAwake (12.8.2):
     - ExpoModulesCore
-  - ExpoModulesCore (1.11.13):
+  - ExpoModulesCore (1.11.14):
     - glog
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
     - React-NativeModulesApple
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
-  - ExpoPencilkit (0.0.3):
+  - ExpoPencilkit (0.0.5):
     - ExpoModulesCore
   - FBLazyVector (0.73.6)
   - FBReactNativeSpec (0.73.6):
@@ -1264,11 +1264,11 @@ SPEC CHECKSUMS:
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   EXConstants: a5f6276e565d98f9eb4280f81241fc342d641590
   EXFont: f20669cb266ef48b004f1eb1f2b20db96cd1df9f
-  Expo: 2cdb5916749a1509cf88114f1f510bd458630eb4
+  Expo: 7b9976a9b2be116a701b233d6655b229a3c9316e
   ExpoFileSystem: 74cc0fae916f9f044248433971dcfc8c3befd057
   ExpoKeepAwake: 0f5cad99603a3268e50af9a6eb8b76d0d9ac956c
-  ExpoModulesCore: 4a8928a228569301ac4fc4a1e846713e05754d05
-  ExpoPencilkit: 6aeb3ea087f6945a8d5400209e00c9962f3ccf32
+  ExpoModulesCore: 421e9c6bcb63baf153a5ec22b2b4319addfe331c
+  ExpoPencilkit: 7ecd46a6a2483dd857c7acb114efdb04c409cc11
   FBLazyVector: f64d1e2ea739b4d8f7e4740cde18089cd97fe864
   FBReactNativeSpec: 9f2b8b243131565335437dba74923a8d3015e780
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9

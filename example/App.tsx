@@ -42,6 +42,20 @@ export default function App() {
           }}
         />
 
+        <Button
+          title='undo'
+          onPress={async () => {
+            await pencilKitRef.current?.undo();
+          }}
+        />
+
+        <Button
+          title='redo'
+          onPress={async () => {
+            await pencilKitRef.current?.redo();
+          }}
+        />
+
         <Button title='capture' onPress={captureHandler} />
       </View>
     </View>
