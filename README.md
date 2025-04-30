@@ -1,61 +1,89 @@
 # @noripi10/expo-pencilkit
 
-Apple Pencilkit for Expo(iOS)
+A native module implementation of Apple PencilKit for Expo applications on iOS. This library allows you to easily implement drawing functionality using Apple Pencil in your Expo applications.
 
-# API documentation
+[日本語のREADME](./README.ja.md)
 
-- [Pencilkit Document](https://developer.apple.com/documentation/pencilkit)
+## Features
 
-# Installation in managed Expo projects
+- Native implementation of Apple PencilKit
+- Easy integration with Expo projects
+- Drawing operations: clear, undo, and redo functionality
+- Support for drawing on existing image data
 
-For [managed](https://docs.expo.dev/versions/latest/introduction/managed-vs-bare/) Expo projects, please follow the installation instructions in the [API documentation for the latest stable release](#api-documentation). If you follow the link and there is no documentation available then this library is not yet usable within managed projects &mdash; it is likely to be included in an upcoming Expo SDK release.
+## Installation
 
-## Add the package to your npm dependencies
-
-```
-yarn install @noripi10/expo-pencilkit
-or
-npm install @noripi10/expo-pencilkit
-```
-
-## How to use
-
-- Prebuild or Development Build
-
-```
-  npx expo prebuild -p ios
-  or
-  eas build -p ios -e development
+```bash
+npx expo install @noripi10/expo-pencilkit
 ```
 
-```tsx
-import ExpoPencilkit from '@noripi10/expo-pencilkit';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+## Requirements
 
-// base64 image data copy here
-const imageData = '{}';
+- Expo SDK 48 or higher
+- iOS 13.0 or higher
+- iOS devices only (Not available for Android)
+
+## Usage
+
+### Basic Implementation
+
+```typescript
+import { ExpoPencilkit } from '@noripi10/expo-pencilkit';
+import { useRef } from 'react';
 
 export default function App() {
-  const clear = async () => {
-    clearDrawAsync();
-  };
+  const pencilKitRef = useRef<ExpePencilKitViewMethods>(null);
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.container}>
-        <Text style={{ alignSelf: 'center' }}>Create Expo Modules + Apple PencilKit</Text>
-        <ExpoPencilkit style={{ flex: 1 }} imageData={imageData} />
-      </SafeAreaView>
+      <ExpoPencilkit
+        ref={pencilKitRef}
+        style={styles.pencilKit}
+        // Optional: Display existing image data
+        imageData="base64 encoded image data"
+      />
+
+      {/* Control buttons example */}
+      <Button title="Clear" onPress={() => pencilKitRef.current?.clearDraw()} />
+      <Button title="Undo" onPress={() => pencilKitRef.current?.undo()} />
+      <Button title="Redo" onPress={() => pencilKitRef.current?.redo()} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
 ```
 
-<img src="images/sample.png" alt="Sample" width="300px">
+### Props
+
+| Property Name | Type    | Description                                                    |
+| ------------- | ------- | -------------------------------------------------------------- |
+| imageData     | string? | Base64 encoded image data to display as background for drawing |
+
+### Methods
+
+| Method Name | Parameters          | Description                                    |
+| ----------- | ------------------- | ---------------------------------------------- |
+| clearDraw   | { force?: boolean } | Clears the drawing canvas                      |
+| undo        | -                   | Undoes the last drawing operation              |
+| redo        | -                   | Redoes the previously undone drawing operation |
+
+## Important Notes
+
+- This library is iOS-exclusive and will not work on Android devices
+- Requires iOS 13.0 or higher to fully utilize Apple Pencil features
+- Requires Expo Development Build (will not work in Expo Go)
+
+## Preivew
+
+<img alt='sample' src="https://pub-a5c462e215f34924adedf4246089186b.r2.dev/sample.png" width="240" style="max-width: 100%; height: auto;" />
+
+## License
+
+MIT
+
+## Author
+
+noripi10 ([@noripi10](https://github.com/noripi10))
+
+## Issues and Feature Requests
+
+Please submit bug reports and feature requests to [GitHub Issues](https://github.com/noripi10/expo-pencilkit/issues).
