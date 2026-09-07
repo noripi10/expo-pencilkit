@@ -32,6 +32,11 @@ public class ExpoPencilkitModule: Module {
             view.pencilkitView.redo()
             promise.resolve(nil)
         }
+
+        AsyncFunction("setRulerActive") { (view: ExpoPencilkitView, active: Bool, promise: Promise) in
+            view.pencilkitView.setRulerActive(active)
+            promise.resolve(nil)
+        }
     }
   }
 }

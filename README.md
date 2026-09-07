@@ -65,6 +65,7 @@ export default function App() {
 | clearDraw   | { force?: boolean } | Clears the drawing canvas                      |
 | undo        | -                   | Undoes the last drawing operation              |
 | redo        | -                   | Redoes the previously undone drawing operation |
+| setRulerActive | boolean          | Shows or hides the ruler in the tool picker    |
 
 ## Important Notes
 

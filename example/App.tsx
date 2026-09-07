@@ -1,5 +1,5 @@
 import ExpoPencilkit, { ExpePencilKitViewMethods } from 'expo-pencilkit';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 
@@ -9,6 +9,7 @@ const imageData =
 export default function App() {
   const viewRef = useRef<View>(null);
   const pencilKitRef = useRef<ExpePencilKitViewMethods>(null);
+  const [rulerActive, setRulerActive] = useState(false);
 
   const captureHandler = async () => {
     if (!viewRef.current) return;
@@ -57,6 +58,15 @@ export default function App() {
         />
 
         <Button title='capture' onPress={captureHandler} />
+
+        <Button
+          title={rulerActive ? 'ruler off' : 'ruler on'}
+          onPress={async () => {
+            const next = !rulerActive;
+            await pencilKitRef.current?.setRulerActive(next);
+            setRulerActive(next);
+          }}
+        />
       </View>
     </View>
   );
