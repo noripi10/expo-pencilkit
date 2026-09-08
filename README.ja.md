@@ -66,6 +66,7 @@ export default function App() {
 | clearDraw  | { force?: boolean } | 描画をクリアします               |
 | undo       | -                   | 直前の描画操作を取り消します     |
 | redo       | -                   | 取り消した描画操作をやり直します |
+| setRulerActive | boolean         | ツールピッカーのルーラーの表示/非表示を切り替えます |
 
 ## 注意事項
 

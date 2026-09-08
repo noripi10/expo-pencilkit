@@ -24,6 +24,11 @@ export const ExpoPencilkit = React.forwardRef<ExpePencilKitViewMethods, ExpoPenc
         await nativeRef.current.redo();
       }
     },
+    setRulerActive: async (active) => {
+      if (nativeRef.current) {
+        await nativeRef.current.setRulerActive(active);
+      }
+    },
   }));
 
   return <NativeViewManager {...props} ref={nativeRef} />;

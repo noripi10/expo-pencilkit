@@ -102,6 +102,12 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
       canvas.undoManager?.redo()
     }
 
+    func setRulerActive(_ active: Bool) {
+        if #available(iOS 14.0, *) {
+            toolPicker?.isRulerActive = active
+        }
+    }
+
     func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {
         print("canvasViewDidBeginUsingTool")
     }
