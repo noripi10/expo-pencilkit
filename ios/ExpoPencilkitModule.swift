@@ -37,6 +37,15 @@ public class ExpoPencilkitModule: Module {
             view.pencilkitView.setRulerActive(active)
             promise.resolve(nil)
         }
+
+        AsyncFunction("exportImage") { (view: ExpoPencilkitView, promise: Promise) in
+            do {
+                let result = try view.pencilkitView.exportImage()
+                promise.resolve(result)
+            } catch {
+                promise.reject("EXPORT IMAGE ERROR", error.localizedDescription)
+            }
+        }.runOnQueue(.main)
     }
   }
 }

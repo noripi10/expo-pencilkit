@@ -108,8 +108,77 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
         }
     }
 
+    // templateImageView の contentMode(.scaleAspectFill) と同じ見た目になるよう、
+    // 画像のアスペクト比を保ったまま bounds を覆う矩形を計算する（はみ出た部分は自然にクリップされる）
+    private func aspectFillRect(for imageSize: CGSize, in bounds: CGRect) -> CGRect {
+        guard imageSize.width > 0, imageSize.height > 0 else { return bounds }
+
+        let scale = max(bounds.width / imageSize.width, bounds.height / imageSize.height)
+        let scaledWidth = imageSize.width * scale
+        let scaledHeight = imageSize.height * scale
+
+        return CGRect(
+            x: bounds.midX - scaledWidth / 2,
+            y: bounds.midY - scaledHeight / 2,
+            width: scaledWidth,
+            height: scaledHeight
+        )
+    }
+
+    func exportImage() throws -> ExportImageResult {
+        let bounds = canvas.bounds
+
+        // レイアウト前など、canvas がまだ有効なサイズを持っていない場合はエラーにする
+        // （UIGraphicsImageRenderer はサイズ0以下の bounds を扱えないため）
+        guard bounds.width > 0, bounds.height > 0 else {
+            throw ExportImageError.viewNotReady
+        }
+
+        // 背景画像 + 描画内容を1枚に合成
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        let composedImage = renderer.image { context in
+            // 背景（既存の画像データがあれば、画面表示と同じ scaleAspectFill で描画）
+            if let templateImage = templateImageView.image {
+                let fillRect = aspectFillRect(for: templateImage.size, in: bounds)
+                templateImage.draw(in: fillRect)
+            }
+
+            // PKDrawingをUIImageとして描画（devicePixelScaleで高解像度に）
+            let drawingImage = canvas.drawing.image(from: bounds, scale: UIScreen.main.scale)
+            drawingImage.draw(in: bounds)
+        }
+
+        guard let pngData = composedImage.pngData() else {
+            throw ExportImageError.encodingFailed
+        }
+
+        let fileName = "\(UUID().uuidString).png"
+        let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+        try pngData.write(to: fileURL)
+
+        let base64 = pngData.base64EncodedString()
+
+        var result = ExportImageResult()
+        result.path = fileURL.path
+        result.base64 = base64
+        return result
+    }
+
     func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {
         print("canvasViewDidBeginUsingTool")
     }
 }
 
+enum ExportImageError: LocalizedError {
+    case encodingFailed
+    case viewNotReady
+
+    var errorDescription: String? {
+        switch self {
+        case .encodingFailed:
+            return "Failed to encode the exported image as PNG."
+        case .viewNotReady:
+            return "The canvas view is not ready to export an image yet."
+        }
+    }
+}

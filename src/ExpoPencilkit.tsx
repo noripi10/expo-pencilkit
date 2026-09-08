@@ -29,6 +29,12 @@ export const ExpoPencilkit = React.forwardRef<ExpePencilKitViewMethods, ExpoPenc
         await nativeRef.current.setRulerActive(active);
       }
     },
+    exportImage: async () => {
+      if (nativeRef.current) {
+        return await nativeRef.current.exportImage();
+      }
+      throw new Error('PencilKit view is not ready.');
+    },
   }));
 
   return <NativeViewManager {...props} ref={nativeRef} />;
