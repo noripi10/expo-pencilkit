@@ -104,7 +104,7 @@ class PencilkitView: UIView, PKToolPickerObserver, UIGestureRecognizerDelegate, 
 
     func setRulerActive(_ active: Bool) {
         if #available(iOS 14.0, *) {
-            toolPicker?.rulerActive = active
+            toolPicker?.isRulerActive = active
         }
     }
 
