@@ -1,6 +1,6 @@
-import ExpoPencilkit, { ExpePencilKitViewMethods } from 'expo-pencilkit';
+import ExpoPencilkit, { ExpePencilKitViewMethods, ExportImageResult } from 'expo-pencilkit';
 import { useRef, useState } from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { captureRef } from 'react-native-view-shot';
 
 const imageData =
@@ -10,6 +10,8 @@ export default function App() {
   const viewRef = useRef<View>(null);
   const pencilKitRef = useRef<ExpePencilKitViewMethods>(null);
   const [rulerActive, setRulerActive] = useState(false);
+
+  const [saveData, setSaveData] = useState<ExportImageResult>();
 
   const captureHandler = async () => {
     if (!viewRef.current) return;
@@ -60,6 +62,15 @@ export default function App() {
         <Button title='capture' onPress={captureHandler} />
 
         <Button
+          title='exportImage'
+          onPress={async () => {
+            const result = await pencilKitRef.current?.exportImage();
+            setSaveData(result);
+            console.log(result?.path);
+          }}
+        />
+
+        <Button
           title={rulerActive ? 'ruler off' : 'ruler on'}
           onPress={async () => {
             const next = !rulerActive;
@@ -68,6 +79,16 @@ export default function App() {
           }}
         />
       </View>
+
+      {saveData?.base64 && (
+        <View style={{ position: 'absolute', bottom: 120, right: 10 }}>
+          <Image
+            source={{ uri: `data:image/png;base64,${saveData.base64}`, width: 100, height: 100 }}
+            resizeMethod='resize'
+            resizeMode='contain'
+          />
+        </View>
+      )}
     </View>
   );
 }
