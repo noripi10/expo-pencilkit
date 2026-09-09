@@ -1,14 +1,14 @@
-import { ViewComponent, ViewProps } from 'react-native';
+import { ViewProps } from 'react-native';
 
 export type ExpoPencilkitViewProps = {
   imageData?: string;
 } & ViewProps;
 
-type ClearDrawProps = {
+export type ClearDrawProps = {
   force: boolean;
 };
 
-type ExportImageResult = {
+export type ExportImageResult = {
   path: string;
   base64: string;
 };

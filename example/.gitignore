@@ -9,6 +9,10 @@ dist/
 web-build/
 
 # Native
+ios/
+android/
+
+# Native
 *.orig.*
 *.jks
 *.p8
