@@ -29,6 +29,16 @@ export const ExpoPencilkit = React.forwardRef<ExpePencilKitViewMethods, ExpoPenc
         await nativeRef.current.setRulerActive(active);
       }
     },
+    setPanZoomMode: async (enabled) => {
+      if (nativeRef.current) {
+        await nativeRef.current.setPanZoomMode(enabled);
+      }
+    },
+    resetZoom: async () => {
+      if (nativeRef.current) {
+        await nativeRef.current.resetZoom();
+      }
+    },
   }));
 
   return <NativeViewManager {...props} ref={nativeRef} />;

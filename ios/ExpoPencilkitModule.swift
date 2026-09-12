@@ -37,6 +37,16 @@ public class ExpoPencilkitModule: Module {
             view.pencilkitView.setRulerActive(active)
             promise.resolve(nil)
         }
+
+        AsyncFunction("setPanZoomMode") { (view: ExpoPencilkitView, enabled: Bool, promise: Promise) in
+            view.pencilkitView.setPanZoomMode(enabled)
+            promise.resolve(nil)
+        }
+
+        AsyncFunction("resetZoom") { (view: ExpoPencilkitView, promise: Promise) in
+            view.pencilkitView.resetZoom()
+            promise.resolve(nil)
+        }
     }
   }
 }

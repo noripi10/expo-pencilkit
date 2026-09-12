@@ -10,6 +10,7 @@ export default function App() {
   const viewRef = useRef<View>(null);
   const pencilKitRef = useRef<ExpePencilKitViewMethods>(null);
   const [rulerActive, setRulerActive] = useState(false);
+  const [panZoomMode, setPanZoomMode] = useState(false);
 
   const captureHandler = async () => {
     if (!viewRef.current) return;
@@ -65,6 +66,22 @@ export default function App() {
             const next = !rulerActive;
             await pencilKitRef.current?.setRulerActive(next);
             setRulerActive(next);
+          }}
+        />
+
+        <Button
+          title={panZoomMode ? 'mode: pan/zoom' : 'mode: draw'}
+          onPress={async () => {
+            const next = !panZoomMode;
+            await pencilKitRef.current?.setPanZoomMode(next);
+            setPanZoomMode(next);
+          }}
+        />
+
+        <Button
+          title='reset zoom'
+          onPress={async () => {
+            await pencilKitRef.current?.resetZoom();
           }}
         />
       </View>

@@ -66,6 +66,8 @@ export default function App() {
 | undo        | -                   | Undoes the last drawing operation              |
 | redo        | -                   | Redoes the previously undone drawing operation |
 | setRulerActive | boolean          | Shows or hides the ruler in the tool picker    |
+| setPanZoomMode | boolean          | Switches between drawing mode and pan/zoom mode |
+| resetZoom   | -                   | Resets zoom scale back to 100%                 |
 
 ## Important Notes
 

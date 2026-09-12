@@ -67,6 +67,8 @@ export default function App() {
 | undo       | -                   | 直前の描画操作を取り消します     |
 | redo       | -                   | 取り消した描画操作をやり直します |
 | setRulerActive | boolean         | ツールピッカーのルーラーの表示/非表示を切り替えます |
+| setPanZoomMode | boolean         | 描画モードとパン/ズームモードを切り替えます      |
+| resetZoom  | -                   | ズームを100%にリセットします     |
 
 ## 注意事項
 
