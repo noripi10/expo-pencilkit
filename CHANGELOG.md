@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.2.0](https://github.com/noripi10/expo-pencilkit/compare/v1.1.0...v1.2.0) (2026-09-25)
+
+### Features
+
+- add `setPanZoomMode` to switch between drawing mode and pan/zoom mode (pinch zoom up to 5x)
+- add `resetZoom` to reset the zoom scale to 1x
+
+### Documentation
+
+- add `exportImage`, `setPanZoomMode` and `resetZoom` usage to README (en/ja)
+
+### Chores
+
+- add pan/zoom controls to the example app
+
 ## [1.1.0](https://github.com/noripi10/expo-pencilkit/compare/v1.0.0...v1.1.0) (2026-09-09)
 
 ### Features
