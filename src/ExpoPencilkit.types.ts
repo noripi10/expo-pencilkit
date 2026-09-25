@@ -19,4 +19,6 @@ export type ExpePencilKitViewMethods = {
   redo: () => Promise<void>;
   setRulerActive: (active: boolean) => Promise<void>;
   exportImage: () => Promise<ExportImageResult>;
+  setPanZoomMode: (enabled: boolean) => Promise<void>;
+  resetZoom: () => Promise<void>;
 };

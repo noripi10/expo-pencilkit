@@ -10,6 +10,7 @@ export default function App() {
   const viewRef = useRef<View>(null);
   const pencilKitRef = useRef<ExpePencilKitViewMethods>(null);
   const [rulerActive, setRulerActive] = useState(false);
+  const [panZoomMode, setPanZoomMode] = useState(false);
 
   const [saveData, setSaveData] = useState<ExportImageResult>();
 
@@ -78,12 +79,28 @@ export default function App() {
             setRulerActive(next);
           }}
         />
+
+        <Button
+          title={panZoomMode ? 'mode: pan/zoom' : 'mode: draw'}
+          onPress={async () => {
+            const next = !panZoomMode;
+            await pencilKitRef.current?.setPanZoomMode(next);
+            setPanZoomMode(next);
+          }}
+        />
+
+        <Button
+          title='reset zoom'
+          onPress={async () => {
+            await pencilKitRef.current?.resetZoom();
+          }}
+        />
       </View>
 
       {saveData?.base64 && (
-        <View style={{ position: 'absolute', bottom: 120, right: 10 }}>
+        <View style={{ position: 'absolute', bottom: 100, right: 10 }}>
           <Image
-            source={{ uri: `data:image/png;base64,${saveData.base64}`, width: 100, height: 100 }}
+            source={{ uri: `data:image/png;base64,${saveData.base64}`, width: 80, height: 80 }}
             resizeMethod='resize'
             resizeMode='contain'
           />

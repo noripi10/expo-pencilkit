@@ -35,6 +35,16 @@ export const ExpoPencilkit = React.forwardRef<ExpePencilKitViewMethods, ExpoPenc
       }
       throw new Error('PencilKit view is not ready.');
     },
+    setPanZoomMode: async (enable: boolean) => {
+      if (nativeRef.current) {
+        await nativeRef.current.setPanZoomMode(enable);
+      }
+    },
+    resetZoom: async () => {
+      if (nativeRef.current) {
+        await nativeRef.current.resetZoom();
+      }
+    },
   }));
 
   return <NativeViewManager {...props} ref={nativeRef} />;
