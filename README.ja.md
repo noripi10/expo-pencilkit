@@ -11,6 +11,8 @@ iOS専用のApple PencilKitをExpo用のネイティブモジュールとして�
 - Expoプロジェクトでの簡単な統合
 - 描画のクリア、取り消し（undo）、やり直し（redo）機能
 - 既存の画像データ上への描画サポート
+- 描画内容（背景画像を含む）のPNG画像としてのエクスポート
+- キャンバスのスクロール・ピンチズーム（最大5倍）が可能なパン/ズームモード
 
 ## インストール
 
@@ -67,6 +69,46 @@ export default function App() {
 | undo       | -                   | 直前の描画操作を取り消します     |
 | redo       | -                   | 取り消した描画操作をやり直します |
 | setRulerActive | boolean         | ツールピッカーのルーラーの表示/非表示を切り替えます |
+| exportImage | -                  | 背景画像と描画内容を合成したPNG画像を出力します。`Promise<ExportImageResult>` を返します |
+| setPanZoomMode | boolean         | 描画モード（`false`）とパン/ズームモード（`true`）を切り替えます |
+| resetZoom  | -                   | ズーム倍率を等倍（1倍）に戻します（アニメーション付き） |
+
+### 画像のエクスポート
+
+`exportImage()` は背景画像（`imageData`）と描画内容を1枚のPNGに合成し、アプリの一時ディレクトリに保存したうえで、ファイルパスとBase64データを返します。
+
+```typescript
+import { ExportImageResult } from '@noripi10/expo-pencilkit';
+
+const result: ExportImageResult | undefined = await pencilKitRef.current?.exportImage();
+// result.path   -> 一時ディレクトリに保存されたPNGファイルの絶対パス
+// result.base64 -> Base64エンコードされたPNGデータ（例: `data:image/png;base64,${result.base64}`）
+```
+
+| フィールド | 型     | 説明                                               |
+| ---------- | ------ | -------------------------------------------------- |
+| path       | string | 一時ディレクトリに保存されたPNGファイルの絶対パス |
+| base64     | string | Base64エンコードされたPNGデータ                    |
+
+- 一時ディレクトリに保存されるため、永続化したい場合は別の場所へコピーしてください。
+- ビューのレイアウト前（サイズが0）やPNGエンコードに失敗した場合、Promiseはrejectされます。
+
+### パン/ズームモード
+
+`setPanZoomMode(true)` を呼ぶとパン/ズームモードに切り替わり、指でのスクロールとピンチによる拡大縮小（1〜5倍）ができるようになります。背景画像と描画内容はまとめて拡大縮小されます。このモード中は描画できません。`setPanZoomMode(false)` で描画モードに戻ります。ズーム倍率は維持されるため、拡大した状態のまま描き込むことができます。
+
+```typescript
+const [panZoom, setPanZoom] = useState(false);
+
+const togglePanZoom = async () => {
+  const next = !panZoom;
+  await pencilKitRef.current?.setPanZoomMode(next);
+  setPanZoom(next);
+};
+
+// 等倍に戻す
+await pencilKitRef.current?.resetZoom();
+```
 
 ## 注意事項
 

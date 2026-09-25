@@ -10,6 +10,8 @@ A native module implementation of Apple PencilKit for Expo applications on iOS. 
 - Easy integration with Expo projects
 - Drawing operations: clear, undo, and redo functionality
 - Support for drawing on existing image data
+- Export the drawing (including the background image) as a PNG image
+- Pan/zoom mode to scroll and pinch-zoom the canvas (up to 5x)
 
 ## Installation
 
@@ -66,6 +68,46 @@ export default function App() {
 | undo        | -                   | Undoes the last drawing operation              |
 | redo        | -                   | Redoes the previously undone drawing operation |
 | setRulerActive | boolean          | Shows or hides the ruler in the tool picker    |
+| exportImage | -                   | Exports the drawing composited with the background image as PNG. Returns `Promise<ExportImageResult>` |
+| setPanZoomMode | boolean          | Switches between drawing mode (`false`) and pan/zoom mode (`true`) |
+| resetZoom   | -                   | Resets the zoom scale to 1x (animated)          |
+
+### Exporting an Image
+
+`exportImage()` renders the background image (`imageData`) and the drawing into a single PNG, saves it to the app's temporary directory, and returns both the file path and the Base64 data.
+
+```typescript
+import { ExportImageResult } from '@noripi10/expo-pencilkit';
+
+const result: ExportImageResult | undefined = await pencilKitRef.current?.exportImage();
+// result.path   -> absolute path of the PNG file in the temporary directory
+// result.base64 -> Base64 encoded PNG data (e.g. `data:image/png;base64,${result.base64}`)
+```
+
+| Field  | Type   | Description                                            |
+| ------ | ------ | ------------------------------------------------------ |
+| path   | string | Absolute path of the PNG file saved in the temp directory |
+| base64 | string | Base64 encoded PNG data                                |
+
+- The file is written to the temporary directory, so copy it elsewhere if you need to keep it.
+- The promise is rejected if the view has not been laid out yet (zero size) or if PNG encoding fails.
+
+### Pan / Zoom Mode
+
+`setPanZoomMode(true)` switches the canvas into pan/zoom mode, where you can scroll with a finger and pinch to zoom (1x–5x). The background image and the drawing are zoomed together. While in this mode, drawing is disabled. Call `setPanZoomMode(false)` to return to drawing mode; the current zoom level is kept, so you can keep drawing on the zoomed canvas.
+
+```typescript
+const [panZoom, setPanZoom] = useState(false);
+
+const togglePanZoom = async () => {
+  const next = !panZoom;
+  await pencilKitRef.current?.setPanZoomMode(next);
+  setPanZoom(next);
+};
+
+// Back to 1x
+await pencilKitRef.current?.resetZoom();
+```
 
 ## Important Notes
 
